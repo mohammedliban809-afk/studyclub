@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Club - Master Any Subject Together</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Canvas Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#eef2ff',
+                            100: '#e0e7ff',
+                            200: '#c7d2fe',
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                            700: '#4338ca',
+                            900: '#312e81',
+                        }
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-12px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #4f46e5 0%, #a855f7 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased min-h-screen flex flex-col selection:bg-brand-500 selection:text-white">
+
+    <!-- Header Navigation -->
+    <header class="sticky top-0 z-40 bg-white/80 backdrop-blur-md border-b border-slate-100 transition-all">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-3 cursor-pointer" onclick="showSection('landing-view')">
+                <div class="w-10 h-10 gradient-bg rounded-xl flex items-center justify-center text-white text-xl font-black shadow-md shadow-brand-500/20">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                </div>
+                <span class="text-xl font-bold tracking-tight text-slate-900">Study<span class="text-brand-600">Club</span></span>
+            </div>
+
+            <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-600">
+                <a href="#features" class="hover:text-brand-600 transition">Features</a>
+                <a href="#subjects" class="hover:text-brand-600 transition">Subjects</a>
+                <a href="#community" class="hover:text-brand-600 transition">Community</a>
+                <a href="#faq" class="hover:text-brand-600 transition">FAQ</a>
+            </nav>
+
+            <div class="flex items-center gap-4">
+                <button onclick="openRegisterModal()" class="gradient-bg text-white px-5 py-2.5 rounded-xl font-semibold text-sm shadow-md shadow-brand-500/20 hover:shadow-lg hover:shadow-brand-500/30 hover:scale-[1.02] active:scale-[0.98] transition">
+                    Join Now
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN CONTAINER -->
+    <main class="flex-1">
+
+        <!-- VIEW 1: LANDING HERO SECTION -->
+        <section id="landing-view" class="transition-opacity duration-300">
+            <!-- Hero -->
+            <div class="relative overflow-hidden pt-12 pb-20 lg:pt-20 lg:pb-32 bg-gradient-to-b from-indigo-50/50 via-white to-slate-50">
+                <div class="absolute -top-40 -right-40 w-96 h-96 bg-brand-200/40 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="absolute top-60 -left-20 w-80 h-80 bg-purple-200/40 rounded-full blur-3xl pointer-events-none"></div>
+
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                    <div class="grid lg:grid-cols-12 gap-12 items-center">
+                        <!-- Hero Left Content -->
+                        <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+                            <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-brand-50 border border-brand-200 text-brand-700 text-xs font-semibold uppercase tracking-wider">
+                                <span class="w-2 h-2 rounded-full bg-brand-600 animate-ping"></span>
+                                Spring 2026 Cohort Open
+                            </div>
+
+                            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 tracking-tight leading-tight">
+                                Level up your learning with collaborative <span class="gradient-text">Study Squads</span>.
+                            </h1>
+
+                            <p class="text-lg text-slate-600 max-w-2xl mx-auto lg:mx-0 font-normal leading-relaxed">
+                                Join peer study groups, access curated problem sets, get real-time feedback, and boost your GPA with structured daily practice sessions.
+                            </p>
+
+                            <!-- CTAs -->
+                            <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-4">
+                                <button onclick="openRegisterModal()" class="w-full sm:w-auto gradient-bg text-white px-8 py-4 rounded-xl font-bold text-base shadow-xl shadow-brand-500/25 hover:shadow-2xl hover:shadow-brand-500/40 hover:-translate-y-0.5 active:translate-y-0 transition flex items-center justify-center gap-3">
+                                    <span>Join Now & Assess Skills</span>
+                                    <i class="fa-solid fa-arrow-right"></i>
+                                </button>
+                                <a href="#features" class="w-full sm:w-auto px-6 py-4 rounded-xl font-semibold text-slate-700 bg-white border border-slate-200 hover:bg-slate-50 transition text-center">
+                                    Explore Features
+                                </a>
+                            </div>
+
+                            <!-- Social Proof -->
+                            <div class="pt-6 flex items-center justify-center lg:justify-start gap-4 text-xs text-slate-500">
+                                <div class="flex -space-x-2">
+                                    <img class="inline-block h-8 w-8 rounded-full ring-2 ring-white" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80" alt="Member">
+                                    <img class="inline-block h-8 w-8 rounded-full ring-2 ring-white" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=100&q=80" alt="Member">
+                                    <img class="inline-block h-8 w-8 rounded-full ring-2 ring-white" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=100&q=80" alt="Member">
+                                    <img class="inline-block h-8 w-8 rounded-full ring-2 ring-white" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=100&q=80" alt="Member">
+                                </div>
+                                <span><strong class="text-slate-800">12,400+</strong> students actively studying today</span>
+                            </div>
+                        </div>
+
+                        <!-- Hero Right Graphic/Card -->
+                        <div class="lg:col-span-5 relative">
+                            <div class="relative mx-auto max-w-md lg:max-w-none">
+                                <!-- Card Preview -->
+                                <div class="bg-white rounded-2xl shadow-2xl p-6 border border-slate-100 space-y-6 animate-float">
+                                    <div class="flex items-center justify-between pb-4 border-b border-slate-100">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-10 h-10 rounded-lg bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold">
+                                                <i class="fa-solid fa-brain"></i>
+                                            </div>
+                                            <div>
+                                                <h3 class="font-bold text-slate-900 text-sm">Calculus Prep Group</h3>
+                                                <p class="text-xs text-slate-500">12 Active Members</p>
+                                            </div>
+                                        </div>
+                                        <span class="px-2.5 py-1 bg-green-100 text-green-700 text-xs font-semibold rounded-full">Live Now</span>
+                                    </div>
+
+                                    <!-- Mock Question Preview -->
+                                    <div class="space-y-3">
+                                        <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Quick Diagnostic Question</p>
+                                        <p class="text-sm font-medium text-slate-800">What is the derivative of f(x) = 3x² + 5x?</p>
+                                        <div class="space-y-2">
+                                            <div class="p-3 rounded-lg border border-brand-500 bg-brand-50/50 flex items-center justify-between text-xs font-medium text-brand-900">
+                                                <span>A. f'(x) = 6x + 5</span>
+                                                <i class="fa-solid fa-circle-check text-brand-600"></i>
+                                            </div>
+                                            <div class="p-3 rounded-lg border border-slate-200 flex items-center justify-between text-xs text-slate-600">
+                                                <span>B. f'(x) = 3x + 5</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="pt-2 flex items-center justify-between text-xs text-slate-500">
+                                        <span><i class="fa-solid fa-fire text-orange-500 mr-1"></i> 7 Day Study Streak</span>
+                                        <span class="font-bold text-slate-700">+150 XP Earned</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Subject Badges Section -->
+            <div id="subjects" class="py-12 bg-white border-y border-slate-100">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                    <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-6">Explore Active Study Tracks</p>
+                    <div class="flex flex-wrap justify-center gap-3">
+                        <span class="px-4 py-2 rounded-xl bg-slate-100 hover:bg-brand-50 hover:text-brand-600 font-medium text-sm text-slate-700 transition cursor-pointer flex items-center gap-2">
+                            <i class="fa-solid fa-calculator text-brand-500"></i> Mathematics
+                        </span>
+                        <span class="px-4 py-2 rounded-xl bg-slate-100 hover:bg-brand-50 hover:text-brand-600 font-medium text-sm text-slate-700 transition cursor-pointer flex items-center gap-2">
+                            <i class="fa-solid fa-flask text-emerald-500"></i> Physics & Chemistry
+                        </span>
+                        <span class="px-4 py-2 rounded-xl bg-slate-100 hover:bg-brand-50 hover:text-brand-600 font-medium text-sm text-slate-700 transition cursor-pointer flex items-center gap-2">
+                            <i class="fa-solid fa-code text-indigo-500"></i> Computer Science
+                        </span>
+                        <span class="px-4 py-2 rounded-xl bg-slate-100 hover:bg-brand-50 hover:text-brand-600 font-medium text-sm text-slate-700 transition cursor-pointer flex items-center gap-2">
+                            <i class="fa-solid fa-dna text-rose-500"></i> Biology
+                        </span>
+                        <span class="px-4 py-2 rounded-xl bg-slate-100 hover:bg-brand-50 hover:text-brand-600 font-medium text-sm text-slate-700 transition cursor-pointer flex items-center gap-2">
+                            <i class="fa-solid fa-book text-amber-500"></i> Literature & History
+                        </span>
+                        <span class="px-4 py-2 rounded-xl bg-slate-100 hover:bg-brand-50 hover:text-brand-600 font-medium text-sm text-slate-700 transition cursor-pointer flex items-center gap-2">
+                            <i class="fa-solid fa-globe text-cyan-500"></i> Foreign Languages
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Features Grid -->
+            <div id="features" class="py-20 bg-slate-50">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="text-center max-w-2xl mx-auto mb-16">
+                        <h2 class="text-3xl font-extrabold text-slate-900 sm:text-4xl">Everything you need to stay ahead</h2>
+                        <p class="mt-4 text-slate-600">Built for motivated students who want structured learning, peer accountability, and interactive diagnostics.</p>
+                    </div>
+
+                    <div class="grid md:grid-cols-3 gap-8">
+                        <div class="bg-white p-8 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition">
+                            <div class="w-12 h-12 bg-indigo-50 text-brand-600 rounded-xl flex items-center justify-center text-xl font-bold mb-6">
+                                <i class="fa-solid fa-users text-2xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 mb-3">Smart Group Matching</h3>
+                            <p class="text-slate-600 text-sm leading-relaxed">
+                                Get paired with peers based on your grade, target subject, and current mastery level to keep study sessions effective.
+                            </p>
+                        </div>
+
+                        <div class="bg-white p-8 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition">
+                            <div class="w-12 h-12 bg-purple-50 text-purple-600 rounded-xl flex items-center justify-center text-xl font-bold mb-6">
+                                <i class="fa-solid fa-list-check text-2xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 mb-3">Diagnostic Assessments</h3>
+                            <p class="text-slate-600 text-sm leading-relaxed">
+                                Take mini diagnostic quizzes to pinpoint knowledge gaps and receive instant custom practice questions.
+                            </p>
+                        </div>
+
+                        <div class="bg-white p-8 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition">
+                            <div class="w-12 h-12 bg-emerald-50 text-emerald-600 rounded-xl flex items-center justify-center text-xl font-bold mb-6">
+                                <i class="fa-solid fa-trophy text-2xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 mb-3">Gamified Milestones</h3>
+                            <p class="text-slate-600 text-sm leading-relaxed">
+                                Track streak days, earn achievement badges, and review detailed solution feedback to make studying satisfying.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- VIEW 2: INTERACTIVE QUESTIONNAIRE / ASSESSMENT PAGE (Hidden initially) -->
+        <section id="questionnaire-view" class="hidden min-h-screen py-12 px-4 sm:px-6 lg:px-8 bg-slate-50">
+            <div class="max-w-3xl mx-auto">
+                
+                <!-- Assessment Header Bar -->
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200/80 mb-6">
+                    <div class="flex flex-wrap items-center justify-between gap-4 mb-4">
+                        <div>
+                            <span id="quiz-subject-badge" class="px-3 py-1 bg-brand-50 text-brand-700 text-xs font-bold rounded-full uppercase tracking-wider">
+                                Diagnostic Assessment
+                            </span>
+                            <h2 class="text-xl font-bold text-slate-900 mt-1" id="quiz-user-welcome">
+                                Welcome, Student!
+                            </h2>
+                        </div>
+                        <div class="text-right">
+                            <span class="text-xs text-slate-400 uppercase font-semibold">Progress</span>
+                            <div class="text-sm font-extrabold text-brand-600">
+                                Question <span id="current-q-num">1</span> of <span id="total-q-num">4</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Progress Bar -->
+                    <div class="w-full bg-slate-100 rounded-full h-2.5 overflow-hidden">
+                        <div id="progress-bar" class="bg-brand-600 h-2.5 rounded-full transition-all duration-500" style="width: 25%"></div>
+                    </div>
+                </div>
+
+                <!-- Main Question Card -->
+                <div class="bg-white rounded-2xl p-6 sm:p-8 shadow-md border border-slate-200/80 space-y-6">
+                    <div>
+                        <span id="q-category" class="text-xs font-bold text-indigo-500 uppercase tracking-wide">Category</span>
+                        <h3 id="q-title" class="text-xl sm:text-2xl font-bold text-slate-900 mt-2 leading-relaxed">
+                            Loading question...
+                        </h3>
+                    </div>
+
+                    <!-- Question Options Grid -->
+                    <div id="options-container" class="space-y-3">
+                        <!-- Options injected dynamically by JavaScript -->
+                    </div>
+
+                    <!-- Immediate Feedback Alert Box -->
+                    <div id="feedback-box" class="hidden rounded-xl p-4 transition-all">
+                        <div class="flex items-start gap-3">
+                            <i id="feedback-icon" class="fa-solid text-lg mt-0.5"></i>
+                            <div>
+                                <h4 id="feedback-title" class="font-bold text-sm"></h4>
+                                <p id="feedback-text" class="text-xs sm:text-sm mt-1 leading-relaxed"></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Actions Bottom Row -->
+                    <div class="flex items-center justify-between pt-4 border-t border-slate-100">
+                        <span class="text-xs text-slate-400">Select an option to proceed</span>
+                        <button id="next-q-btn" onclick="nextQuestion()" disabled class="px-6 py-3 rounded-xl bg-brand-600 text-white font-semibold text-sm shadow-md disabled:opacity-50 disabled:cursor-not-allowed hover:bg-brand-700 transition flex items-center gap-2">
+                            <span>Next Question</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- VIEW 3: RESULTS & DASHBOARD PREVIEW (Hidden initially) -->
+        <section id="results-view" class="hidden py-12 px-4 sm:px-6 lg:px-8 bg-slate-50">
+            <div class="max-w-4xl mx-auto space-y-8">
+                <!-- Welcome Banner -->
+                <div class="gradient-bg rounded-3xl p-8 sm:p-10 text-white shadow-xl relative overflow-hidden">
+                    <div class="relative z-10 space-y-4">
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/20 backdrop-blur-md text-xs font-bold">
+                            <i class="fa-solid fa-circle-check"></i> Registration & Diagnostic Complete
+                        </div>
+                        <h1 class="text-3xl sm:text-4xl font-extrabold">Welcome to the Club, <span id="res-user-name">Student</span>!</h1>
+                        <p class="text-indigo-100 text-sm sm:text-base max-w-xl">
+                            We've processed your responses and placed you in our personalized study group track for <strong id="res-user-subject">Subject</strong>.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Score & Stats Cards -->
+                <div class="grid sm:grid-cols-3 gap-6">
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm text-center">
+                        <span class="text-xs font-semibold text-slate-400 uppercase">Assessment Score</span>
+                        <div class="text-3xl font-black text-slate-900 mt-2" id="res-score">0 / 4</div>
+                        <p id="res-score-pct" class="text-xs font-medium text-emerald-600 mt-1">0% Accuracy</p>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm text-center">
+                        <span class="text-xs font-semibold text-slate-400 uppercase">Suggested Squad Level</span>
+                        <div class="text-2xl font-black text-brand-600 mt-2" id="res-level">Intermediate</div>
+                        <p class="text-xs text-slate-500 mt-1">Matched with 15 peers</p>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm text-center">
+                        <span class="text-xs font-semibold text-slate-400 uppercase">Starting Bonus</span>
+                        <div class="text-3xl font-black text-amber-500 mt-2">+250 XP</div>
+                        <p class="text-xs text-slate-500 mt-1">Welcome Gift</p>
+                    </div>
+                </div>
+
+                <!-- Recommended Next Steps / Study Squad Card -->
+                <div class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-6">
+                    <h3 class="text-lg font-bold text-slate-900 border-b border-slate-100 pb-4">
+                        Your Personalized Study Roadmap
+                    </h3>
+
+                    <div class="space-y-4">
+                        <div class="flex items-start gap-4 p-4 rounded-xl bg-slate-50 border border-slate-100">
+                            <div class="w-10 h-10 rounded-lg bg-brand-100 text-brand-600 flex items-center justify-center font-bold text-lg shrink-0">1</div>
+                            <div>
+                                <h4 class="font-bold text-slate-800 text-sm">Join your matched Telegram & Discord Study Room</h4>
+                                <p class="text-xs text-slate-600 mt-1">Collaborate with peers in Grade <span id="res-user-grade">10</span> working on identical study materials.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-4 p-4 rounded-xl bg-slate-50 border border-slate-100">
+                            <div class="w-10 h-10 rounded-lg bg-brand-100 text-brand-600 flex items-center justify-center font-bold text-lg shrink-0">2</div>
+                            <div>
+                                <h4 class="font-bold text-slate-800 text-sm">Attend the Weekly Live Practice Sprint</h4>
+                                <p class="text-xs text-slate-600 mt-1">Scheduled every Tuesday & Thursday at 6:00 PM for guided practice problems.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pt-4 flex flex-wrap gap-4">
+                        <button onclick="showSection('landing-view')" class="px-6 py-3 rounded-xl bg-slate-900 text-white font-semibold text-sm hover:bg-slate-800 transition">
+                            Back to Home
+                        </button>
+                        <button onclick="restartAssessment()" class="px-6 py-3 rounded-xl border border-slate-200 text-slate-700 font-semibold text-sm hover:bg-slate-50 transition">
+                            Retake Assessment
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- REGISTRATION MODAL -->
+    <div id="register-modal" class="fixed inset-0 z-50 hidden overflow-y-auto bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl border border-slate-100 relative animate-in fade-in zoom-in-95 duration-200">
+            <!-- Close Button -->
+            <button onclick="closeRegisterModal()" class="absolute top-6 right-6 w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 flex items-center justify-center transition">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="space-y-2 mb-6">
+                <div class="w-12 h-12 bg-brand-100 text-brand-600 rounded-2xl flex items-center justify-center text-xl font-bold mb-3">
+                    <i class="fa-solid fa-user-plus"></i>
+                </div>
+                <h3 class="text-2xl font-extrabold text-slate-900">Join the Study Club</h3>
+                <p class="text-slate-500 text-sm">Fill in your details to customize your diagnostic assessment and study squad.</p>
+            </div>
+
+            <form id="registration-form" onsubmit="handleRegistrationSubmit(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Full Name</label>
+                    <input type="text" id="reg-name" required placeholder="Alex Morgan" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent text-sm">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Email Address</label>
+                    <input type="email" id="reg-email" required placeholder="alex@example.com" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent text-sm">
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Grade / Level</label>
+                        <select id="reg-grade" required class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent text-sm bg-white">
+                            <option value="High School (9-12)">High School</option>
+                            <option value="College / University">Undergraduate</option>
+                            <option value="Graduate / Postgrad">Graduate</option>
+                            <option value="Self Learner">Self Learner</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Primary Subject</label>
+                        <select id="reg-subject" required class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent text-sm bg-white">
+                            <option value="Mathematics">Mathematics</option>
+                            <option value="Computer Science">Computer Science</option>
+                            <option value="Physics & Science">Physics & Science</option>
+                            <option value="General Aptitude">General Aptitude</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="pt-4">
+                    <button type="submit" class="w-full gradient-bg text-white py-3.5 rounded-xl font-bold text-sm shadow-lg shadow-brand-500/25 hover:shadow-xl hover:shadow-brand-500/40 transition flex items-center justify-center gap-2">
+                        <span>Continue to Diagnostic Quiz</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-100 py-8 text-center text-xs text-slate-400 mt-auto">
+        <p>© 2026 Study Club Interactive Platform. Built for motivated learners worldwide.</p>
+    </footer>
+
+    <!-- INTERACTIVE JAVASCRIPT LOGIC -->
+    <script>
+        // User State
+        let currentUser = {
+            name: '',
+            email: '',
+            grade: '',
+            subject: 'Mathematics'
+        };
+
+        // Question Datasets per Subject
+        const questionBanks = {
+            'Mathematics': [
+                {
+                    category: 'Algebra & Functions',
+                    question: 'If 3x + 7 = 22, what is the value of 2x - 1?',
+                    options: ['9', '11', '14', '5'],
+                    correct: 0, // Option 0: '9'
+                    explanation: 'Solving 3x + 7 = 22 gives 3x = 15, so x = 5. Substituting x = 5 into 2x - 1 gives 2(5) - 1 = 9.'
+                },
+                {
+                    category: 'Geometry',
+                    question: 'What is the area of a right triangle with base 8 and hypotenuse 10?',
+                    options: ['40', '24', '32', '16'],
+                    correct: 1, // '24'
+                    explanation: 'Using the Pythagorean theorem (a² + 8² = 10²), the height is 6. Area = 0.5 * base * height = 0.5 * 8 * 6 = 24.'
+                },
+                {
+                    category: 'Calculus Concepts',
+                    question: 'What is the derivative of f(x) = x³ - 4x + 7?',
+                    options: ['3x² - 4', '3x² - 4x', 'x² - 4', '3x³ - 4'],
+                    correct: 0, // '3x² - 4'
+                    explanation: 'Applying the power rule d/dx(x^n) = n*x^(n-1), derivative of x³ is 3x² and derivative of -4x is -4.'
+                },
+                {
+                    category: 'Statistics',
+                    question: 'What is the median of the dataset [4, 1, 7, 3, 9]?',
+                    options: ['7', '4.8', '4', '3'],
+                    correct: 2, // '4'
+                    explanation: 'Ordering the set yields [1, 3, 4, 7, 9]. The middle value (median) is 4.'
+                }
+            ],
+            'Computer Science': [
+                {
+                    category: 'Data Structures',
+                    question: 'Which data structure follows the Last-In, First-Out (LIFO) principle?',
+                    options: ['Queue', 'Stack', 'Array', 'Linked List'],
+                    correct: 1, // 'Stack'
+                    explanation: 'A Stack operates on a LIFO basis where the last element added is the first one removed.'
+                },
+                {
+                    category: 'Algorithms',
+                    question: 'What is the time complexity of Binary Search on a sorted array of size n?',
+                    options: ['O(n)', 'O(n log n)', 'O(log n)', 'O(1)'],
+                    correct: 2, // 'O(log n)'
+                    explanation: 'Binary Search halves the search space at each step, resulting in logarithmic time complexity O(log n).'
+                },
+                {
+                    category: 'Web Fundamentals',
+                    question: 'Which CSS property is used to create flexbox layout containers?',
+                    options: ['display: flex', 'position: flex', 'align: flexbox', 'layout: flex'],
+                    correct: 0,
+                    explanation: 'Setting "display: flex" initializes a flex container in CSS.'
+                },
+                {
+                    category: 'Logic & Boolean',
+                    question: 'What is the result of True AND (False OR True)?',
+                    options: ['False', 'True', 'Null', 'Undefined'],
+                    correct: 1,
+                    explanation: '(False OR True) evaluates to True. True AND True evaluates to True.'
+                }
+            ],
+            'Physics & Science': [
+                {
+                    category: 'Classical Mechanics',
+                    question: 'According to Newton\'s Second Law, force is equal to mass multiplied by what?',
+                    options: ['Velocity', 'Acceleration', 'Distance', 'Momentum'],
+                    correct: 1,
+                    explanation: 'F = m * a (Force = mass * acceleration).'
+                },
+                {
+                    category: 'Energy & Power',
+                    question: 'What is the SI unit of work and energy?',
+                    options: ['Watt', 'Newton', 'Joule', 'Pascal'],
+                    correct: 2,
+                    explanation: 'The Joule (J) is the standard SI unit measuring work and energy.'
+                },
+                {
+                    category: 'Waves & Light',
+                    question: 'What phenomenon occurs when light bends as it passes from air into water?',
+                    options: ['Refraction', 'Reflection', 'Diffraction', 'Dispersion'],
+                    correct: 0,
+                    explanation: 'Refraction is the bending of light caused by a change in its speed when traveling between mediums.'
+                },
+                {
+                    category: 'Thermodynamics',
+                    question: 'At what temperature in Celsius does pure water freeze under standard pressure?',
+                    options: ['-32°C', '0°C', '32°C', '100°C'],
+                    correct: 1,
+                    explanation: 'Water freezes at 0°C under 1 atm of standard atmospheric pressure.'
+                }
+            ],
+            'General Aptitude': [
+                {
+                    category: 'Verbal Reasoning',
+                    question: 'Which word is an antonym for "Meticulous"?',
+                    options: ['Careful', 'Thorough', 'Careless', 'Precise'],
+                    correct: 2,
+                    explanation: 'Meticulous means showing extreme care and precision; careless is the direct opposite.'
+                },
+                {
+                    category: 'Numerical Sequences',
+                    question: 'Find the next number in the sequence: 2, 6, 12, 20, 30, ...',
+                    options: ['38', '42', '40', '48'],
+                    correct: 1, // 42
+                    explanation: 'Differences increase by 2: +4, +6, +8, +10. The next increment is +12, so 30 + 12 = 42.'
+                },
+                {
+                    category: 'Logical Deduction',
+                    question: 'If all A are B, and all B are C, which statement MUST be true?',
+                    options: ['All C are A', 'All A are C', 'Some B are not C', 'No A is C'],
+                    correct: 1,
+                    explanation: 'By transitive logic, if A ⊆ B and B ⊆ C, then A ⊆ C.'
+                },
+                {
+                    category: 'Pattern Recognition',
+                    question: 'How many minutes are there in 2.5 hours?',
+                    options: ['120', '150', '180', '250'],
+                    correct: 1,
+                    explanation: '2.5 * 60 minutes = 150 minutes.'
+                }
+            ]
+        };
+
+        // Assessment State Variables
+        let currentQuestions = [];
+        let currentQuestionIdx = 0;
+        let selectedOptionIdx = null;
+        let userAnswers = [];
+
+        // UI Navigation Control
+        function showSection(sectionId) {
+            document.getElementById('landing-view').classList.add('hidden');
+            document.getElementById('questionnaire-view').classList.add('hidden');
+            document.getElementById('results-view').classList.add('hidden');
+
+            document.getElementById(sectionId).classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Modal Control
+        function openRegisterModal() {
+            document.getElementById('register-modal').classList.remove('hidden');
+        }
+
+        function closeRegisterModal() {
+            document.getElementById('register-modal').classList.add('hidden');
+        }
+
+        // Handle Registration Form Submit
+        function handleRegistrationSubmit(event) {
+            event.preventDefault();
+
+            currentUser.name = document.getElementById('reg-name').value.trim() || 'Student';
+            currentUser.email = document.getElementById('reg-email').value.trim();
+            currentUser.grade = document.getElementById('reg-grade').value;
+            currentUser.subject = document.getElementById('reg-subject').value;
+
+            closeRegisterModal();
+            startAssessment();
+        }
+
+        // Start Diagnostic Questionnaire
+        function startAssessment() {
+            currentQuestions = questionBanks[currentUser.subject] || questionBanks['Mathematics'];
+            currentQuestionIdx = 0;
+            userAnswers = [];
+
+            // Update Header Info
+            document.getElementById('quiz-user-welcome').innerText = `Welcome, ${currentUser.name}!`;
+            document.getElementById('quiz-subject-badge').innerText = `${currentUser.subject} Track`;
+            document.getElementById('total-q-num').innerText = currentQuestions.length;
+
+            showSection('questionnaire-view');
+            loadQuestion();
+        }
+
+        // Load Question UI
+        function loadQuestion() {
+            const qData = currentQuestions[currentQuestionIdx];
+            selectedOptionIdx = null;
+
+            // Reset UI States
+            document.getElementById('current-q-num').innerText = currentQuestionIdx + 1;
+            document.getElementById('progress-bar').style.width = `${((currentQuestionIdx + 1) / currentQuestions.length) * 100}%`;
+            document.getElementById('q-category').innerText = qData.category;
+            document.getElementById('q-title').innerText = qData.question;
+            
+            const nextBtn = document.getElementById('next-q-btn');
+            nextBtn.disabled = true;
+            nextBtn.querySelector('span').innerText = (currentQuestionIdx === currentQuestions.length - 1) ? 'Finish Assessment' : 'Next Question';
+
+            // Hide feedback box
+            document.getElementById('feedback-box').classList.add('hidden');
+
+            // Render Options
+            const container = document.getElementById('options-container');
+            container.innerHTML = '';
+
+            qData.options.forEach((optText, idx) => {
+                const optBtn = document.createElement('button');
+                optBtn.type = 'button';
+                optBtn.className = `w-full text-left p-4 rounded-xl border border-slate-200 hover:border-brand-500 hover:bg-brand-50/30 transition flex items-center justify-between text-sm sm:text-base font-medium text-slate-700 option-btn-${idx}`;
+                optBtn.onclick = () => selectOption(idx);
+                optBtn.innerHTML = `
+                    <div class="flex items-center gap-3">
+                        <span class="w-7 h-7 rounded-lg bg-slate-100 border border-slate-200 flex items-center justify-center text-xs font-bold text-slate-600 font-mono">${String.fromCharCode(65 + idx)}</span>
+                        <span>${optText}</span>
+                    </div>
+                    <i class="fa-regular fa-circle text-slate-300 text-lg icon-check"></i>
+                `;
+                container.appendChild(optBtn);
+            });
+        }
+
+        // Handle Option Selection
+        function selectOption(index) {
+            if (selectedOptionIdx !== null) return; // Prevent changing after answer confirmed
+            selectedOptionIdx = index;
+
+            const qData = currentQuestions[currentQuestionIdx];
+            const isCorrect = (index === qData.correct);
+
+            userAnswers.push({
+                question: qData.question,
+                selected: index,
+                correct: qData.correct,
+                isCorrect: isCorrect
+            });
+
+            // Styling adjustments for options
+            const options = document.getElementById('options-container').children;
+            for (let i = 0; i < options.length; i++) {
+                const btn = options[i];
+                if (i === index) {
+                    if (isCorrect) {
+                        btn.className = "w-full text-left p-4 rounded-xl border-2 border-green-500 bg-green-50 text-green-900 font-medium flex items-center justify-between text-sm sm:text-base";
+                        btn.querySelector('.icon-check').className = "fa-solid fa-circle-check text-green-600 text-lg";
+                    } else {
+                        btn.className = "w-full text-left p-4 rounded-xl border-2 border-rose-500 bg-rose-50 text-rose-900 font-medium flex items-center justify-between text-sm sm:text-base";
+                        btn.querySelector('.icon-check').className = "fa-solid fa-circle-xmark text-rose-600 text-lg";
+                    }
+                } else if (i === qData.correct) {
+                    // Highlight correct answer if wrong answer was picked
+                    btn.className = "w-full text-left p-4 rounded-xl border-2 border-green-500 bg-green-50/50 text-green-900 font-medium flex items-center justify-between text-sm sm:text-base";
+                    btn.querySelector('.icon-check').className = "fa-solid fa-circle-check text-green-600 text-lg";
+                } else {
+                    btn.className = "w-full text-left p-4 rounded-xl border border-slate-200 text-slate-400 opacity-60 flex items-center justify-between text-sm sm:text-base";
+                }
+            }
+
+            // Display Feedback Box
+            const feedbackBox = document.getElementById('feedback-box');
+            const feedbackIcon = document.getElementById('feedback-icon');
+            const feedbackTitle = document.getElementById('feedback-title');
+            const feedbackText = document.getElementById('feedback-text');
+
+            feedbackBox.classList.remove('hidden', 'bg-green-50', 'border-green-200', 'bg-rose-50', 'border-rose-200');
+
+            if (isCorrect) {
+                feedbackBox.classList.add('bg-green-50', 'border', 'border-green-200');
+                feedbackIcon.className = "fa-solid fa-circle-check text-green-600 text-lg";
+                feedbackTitle.className = "font-bold text-sm text-green-900";
+                feedbackTitle.innerText = "Spot on! That's correct.";
+            } else {
+                feedbackBox.classList.add('bg-rose-50', 'border', 'border-rose-200');
+                feedbackIcon.className = "fa-solid fa-circle-xmark text-rose-600 text-lg";
+                feedbackTitle.className = "font-bold text-sm text-rose-900";
+                feedbackTitle.innerText = "Not quite right.";
+            }
+
+            feedbackText.className = "text-xs sm:text-sm mt-1 leading-relaxed " + (isCorrect ? 'text-green-800' : 'text-rose-800');
+            feedbackText.innerText = qData.explanation;
+
+            // Enable Next Button
+            document.getElementById('next-q-btn').disabled = false;
+        }
+
+        // Move to Next Question or Show Results
+        function nextQuestion() {
+            if (currentQuestionIdx < currentQuestions.length - 1) {
+                currentQuestionIdx++;
+                loadQuestion();
+            } else {
+                finishAssessment();
+            }
+        }
+
+        // Finish Assessment & Trigger Results Page
+        function finishAssessment() {
+            const correctCount = userAnswers.filter(a => a.isCorrect).length;
+            const total = currentQuestions.length;
+            const percentage = Math.round((correctCount / total) * 100);
+
+            // Populate Results UI
+            document.getElementById('res-user-name').innerText = currentUser.name;
+            document.getElementById('res-user-subject').innerText = currentUser.subject;
+            document.getElementById('res-user-grade').innerText = currentUser.grade;
+            document.getElementById('res-score').innerText = `${correctCount} / ${total}`;
+            document.getElementById('res-score-pct').innerText = `${percentage}% Accuracy`;
+
+            let level = "Beginner Track";
+            if (percentage >= 75) level = "Advanced Squad";
+            else if (percentage >= 50) level = "Intermediate Squad";
+            document.getElementById('res-level').innerText = level;
+
+            showSection('results-view');
+
+            // Trigger Confetti Animation
+            if (typeof confetti === 'function') {
+                confetti({
+                    particleCount: 80,
+                    spread: 70,
+                    origin: { y: 0.6 }
+                });
+            }
+        }
+
+        // Retake Quiz
+        function restartAssessment() {
+            startAssessment();
+        }
+    </script>
+</body>
+</html>
